@@ -16,8 +16,19 @@ class Withings::MeasurementGroup
   TYPE_SYSTOLIC_BLOOD_PRESSURE = 10   # mmHg (max, upper)
   TYPE_HEART_PULSE = 11               # bpm
 
-  BLOOD_PRESSURE_MONITOR_TYPES = [TYPE_DIASTOLIC_BLOOD_PRESSURE, TYPE_SYSTOLIC_BLOOD_PRESSURE, TYPE_HEART_PULSE]
-  SCALE_TYPES = [TYPE_WEIGHT, TYPE_SIZE, TYPE_FAT_FREE_MASS_WEIGHT, TYPE_FAT_RATIO, TYPE_FAT_MASS_WEIGHT]
+  BLOOD_PRESSURE_MONITOR_TYPES = [
+    TYPE_DIASTOLIC_BLOOD_PRESSURE,
+    TYPE_SYSTOLIC_BLOOD_PRESSURE,
+    TYPE_HEART_PULSE
+  ]
+  
+  SCALE_TYPES = [
+    TYPE_WEIGHT,
+    TYPE_SIZE,
+    TYPE_FAT_FREE_MASS_WEIGHT,
+    TYPE_FAT_RATIO,
+    TYPE_FAT_MASS_WEIGHT
+  ]
 
   attr_reader :group_id, :attribution, :taken_at, :category
   attr_reader :weight, :size, :fat, :ratio, :fat_free, :diastolic_blood_pressure, :systolic_blood_pressure, :heart_pulse
@@ -55,13 +66,30 @@ class Withings::MeasurementGroup
   end
 
   def to_s
-    "[ Weight: #{self.weight}, Fat: #{self.fat}, Size: #{self.size}, Ratio: #{self.ratio}, Free: #{self.fat_free}, Blood Pressure: #{self.diastolic_blood_pressure}/#{self.systolic_blood_pressure} @ #{self.heart_pulse}, ID: #{self.group_id} (taken at: #{self.taken_at.strftime("%d.%m.%Y %H:%M:%S")})]"
+    "[weight: #{self.weight}, fat: #{self.fat}, size: #{self.size}, ratio: #{self.ratio}, free: #{self.fat_free}, Blood pressure: #{self.diastolic_blood_pressure}/#{self.systolic_blood_pressure} @ #{self.heart_pulse}, iD: #{self.group_id} (taken at: #{self.taken_at.strftime("%d.%m.%Y %H:%M:%S")})]"
+  end
+
+  def to_h
+    {
+      weight: weight,
+      size: size,
+      fat: fat,
+      ratio: ratio,
+      category: category,
+      group_id: group_id,
+      fat_free: fat_free,
+      diastolic_blood_pressure: diastolic_blood_pressure,
+      systolic_blood_pressure: systolic_blood_pressure,
+      heart_pulse: heart_pulse,
+      taken_at: taken_at
+    }
+  end
+
+  def mongoize
+    to_h
   end
 
   def inspect
-    self.to_s
+    to_s
   end
-
-
-
 end
