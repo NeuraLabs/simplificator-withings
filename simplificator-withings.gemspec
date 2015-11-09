@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "mocha", "~> 1.1"
 
 
-  spec.add_dependency 'httparty', "~> 0.13"
+  spec.add_dependency 'httparty'
 end
 
 
